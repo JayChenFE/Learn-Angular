@@ -257,7 +257,9 @@ label[for='toggle-all'] {
 }
 
 .clear-completed,
-html .clear-completed:active {
+.toggle-all1,
+html .clear-completed:active,
+html .toggle-all1:active {
   float: right;
   position: relative;
   line-height: 20px;
@@ -265,10 +267,13 @@ html .clear-completed:active {
   cursor: pointer;
 }
 
-.clear-completed:hover {
+.clear-completed:hover,
+.toggle-all1:hover {
   text-decoration: underline;
 }
-
+.clear-completed,.toggle-all1{
+  margin-left: 5px;
+}
 
 /*
     Hack to remove background from Mobile Safari.

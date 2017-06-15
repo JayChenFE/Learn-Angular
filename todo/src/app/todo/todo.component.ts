@@ -49,8 +49,21 @@ export class TodoComponent implements OnInit {
       });
   }
 
-  getTodos(): void {
+  getTodos() {
     this.service.getTodos().then(todos => this.todos = [...todos]);
+  }
+
+  //小练习-反转状态
+  toggleAll() {
+    // this.service.toggleAll().then(todos=>this.todos = [...todos]);
+    Promise.all(this.todos.map(todo => this.toggleTodo(todo)));
+    // this.todos.forEach(todo => { todo.completed = !todo.completed })
+  }
+  //小练习-删除所有已完成
+  removeCompleted() {
+    const completedTodos = this.todos.filter(todo => todo.completed);
+    const activeTodos = this.todos.filter(todo => !todo.completed);
+    Promise.all(completedTodos.map(todo => this.service.deleteTodoById(todo.id))).then(() => this.todos = [...activeTodos]);
   }
 }
 
