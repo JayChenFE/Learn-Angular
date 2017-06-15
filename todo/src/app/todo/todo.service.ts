@@ -41,8 +41,10 @@ export class TodoService {
 
   //PUT /todos/id
   toggleTodo(todo: Todo): Promise<Todo> {
-    const url = `$(this.api_url)/$(todo.id)`;
-    console.log(url);
+    const url = `${this.api_url}/${todo.id}`;
+    // console.log(this.api_url);
+    // console.log(todo.id);
+    // console.log(url);
     let updatedTodo = Object.assign({}, todo, { completed: !todo.completed });
     return this.http
       .put(url, JSON.stringify(updatedTodo), { headers: this.headers })
@@ -52,7 +54,23 @@ export class TodoService {
   }
 
   //DELETE /todos/id
+  deleteTodoById(id: string): Promise<void> {
+    const url = `${this.api_url}/${id}`;
+    return this.http
+      .delete(url, { headers: this.headers })
+      .toPromise()
+      .then(() => null)
+      .catch(this.handleError);
 
+  }
+  //GET /todos
+  getTodos(): Promise<Todo[]> {
+    return this.http
+      .get(this.api_url)
+      .toPromise()
+      .then(res => res.json().data as Todo[])
+      .catch(this.handleError);
+  }
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);

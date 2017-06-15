@@ -19,6 +19,7 @@ export class TodoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getTodos();
   }
 
   addTodo() {
@@ -28,8 +29,28 @@ export class TodoComponent implements OnInit {
         this.todos = [...this.todos, todo];
         this.desc = '';
       });
-
-    //this.desc = '';
   }
 
+  toggleTodo(todo: Todo) {
+    const idx = this.todos.indexOf(todo);
+    this.service
+      .toggleTodo(todo)
+      .then(newTodo => {
+        this.todos = [...this.todos.slice(0, idx), newTodo, ...this.todos.slice(idx + 1)]
+      });
+  }
+
+  removeTodo(todo: Todo) {
+    const idx = this.todos.indexOf(todo);
+    this.service
+      .deleteTodoById(todo.id)
+      .then(() => {
+        this.todos = [...this.todos.slice(0, idx), ...this.todos.slice(idx + 1)]
+      });
+  }
+
+  getTodos(): void {
+    this.service.getTodos().then(todos => this.todos = [...todos]);
+  }
 }
+
