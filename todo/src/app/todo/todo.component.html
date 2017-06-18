@@ -1,32 +1,19 @@
 <section class="todoapp">
-  <header class="header">
-    <h1>Todos</h1>
-    <input class="new-todo" placeholder="请输入待办事项" autofocus="" [(ngModel)]="desc" (keyup.enter)="addTodo()">
-  </header>
-  <section class="main" *ngIf="todos?.length>0">
-    <input class="toggle-all" type="checkbox">
-    <ul class="todo-list">
-      <li *ngFor="let todo of todos" [class.completed]="todo.completed">
-        <div class="view">
-          <input type="checkbox" class="toggle" (click)="toggleTodo(todo)" [checked]="todo.completed">
-          <label (click)="toggleTodo(todo)">{{todo.desc}}</label>
-          <button class="destroy" (click)="removeTodo(todo);$event.stopPropagation()"></button>
-        </div>
-      </li>
-    </ul>
-  </section>
-  <footer class="footer" *ngIf="todos?.length>0">
-    <span class="todo-count">
-      <strong>{{todos.length}}</strong>{{todos?.length==1?'item':'items'}}left
-    </span>
-    <ul class="filters">
-      <li><a href="">ALL</a></li>
-      <li><a href="">Active</a></li>
-      <li><a href="">Completed</a></li>
-    </ul>
-    <button class="toggle-all1" (click)="toggleAll();$event.stopPropagation()">toggle all</button>
-    <button class="clear-completed" (click)="removeCompleted();$event.stopPropagation()">clear completed</button>
-  </footer>
+  <app-todo-header
+  placeholder="请输入内容"
+  delay="400"
+  (textChanges)="onTextChanges($event)"
+  (onEnterUp)="addTodo()">
+  </app-todo-header>
+  <app-todo-list
+  [todos]="todos"
+  (onRemoveTodo)="removeTodo($event)"
+  (onToggleTodo)="toggleTodo($event)"
+  (onToggleAll)="toggleAll()">
+  </app-todo-list>
+  <app-todo-footer
+  [itemCount]=1
+  (onClear)="removeCompleted()"></app-todo-footer>
 </section>
 
 

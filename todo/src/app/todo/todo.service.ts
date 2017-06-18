@@ -6,7 +6,8 @@ import 'rxjs/add/operator/toPromise'
 
 @Injectable()
 export class TodoService {
-  private api_url = 'api/todos';
+  // private api_url = 'api/todos';
+  private api_url = 'http://localhost:3000/todos';
   private headers = new Headers({ 'Content-Type': 'application/json' });
 
   todos: Todo[] = [];
@@ -15,15 +16,6 @@ export class TodoService {
 
   }
 
-  // addTodo(todoItem: string): Todo[] {
-  //   let todo = {
-  //     id: UUID.UUID(),
-  //     desc: todoItem,
-  //     completed: false
-  //   };
-  //   this.todos.push(todo);
-  //   return this.todos;
-  // }
 
   //POST /todos
   addTodo(desc: string): Promise<Todo> {
@@ -35,7 +27,7 @@ export class TodoService {
 
     return this.http.post(this.api_url, JSON.stringify(todo), { headers: this.headers })
       .toPromise().
-      then(res => res.json().data as Todo)
+      then(res => res.json() as Todo)
       .catch(this.handleError)
   }
 
@@ -43,8 +35,13 @@ export class TodoService {
   toggleTodo(todo: Todo): Promise<Todo> {
     const url = `${this.api_url}/${todo.id}`;
     let updatedTodo = Object.assign({}, todo, { completed: !todo.completed });
+    // return this.http
+    //   .put(url, JSON.stringify(updatedTodo), { headers: this.headers })
+    //   .toPromise()
+    //   .then(() => updatedTodo)
+    //   .catch(this.handleError);
     return this.http
-      .put(url, JSON.stringify(updatedTodo), { headers: this.headers })
+      .patch(url, JSON.stringify({ completed: !todo.completed }), { headers: this.headers })
       .toPromise()
       .then(() => updatedTodo)
       .catch(this.handleError);
@@ -52,8 +49,7 @@ export class TodoService {
 
   //DELETE /todos/id
   deleteTodoById(id: string): Promise<void> {
-    const url = `${this.api_url}/${id}&dd65a7c0-e24f-6c66-862e-0999ea504ca0`;
-    console.log(url);
+    const url = `${this.api_url}/${id}`;
     return this.http
       .delete(url, { headers: this.headers })
       .toPromise()
@@ -66,23 +62,29 @@ export class TodoService {
     return this.http
       .get(this.api_url)
       .toPromise()
-      .then(res => res.json().data as Todo[])
+      .then(res => res.json() as Todo[])
       .catch(this.handleError);
   }
 
-  //PUT /todos/id
-  // toggleAll(): Promise<Todo[]> {
-  //   this.todos.forEach(todo => { todo.completed = !todo.completed })
-  //   return this.http
-  //     .put(this.api_url, JSON.stringify(this.todos), { headers: this.headers })
-  //     .toPromise()
-  //     .then(() => this.todos)
-  //     .catch(this.handleError);
-  // }
+  //GET /todos?completed=true/false
+  filterTodos(filter: string): Promise<Todo[]> {
+    switch (filter) {
+      case 'active':
+        return this.http.get(`${this.api_url}?completed=false`)
+          .toPromise()
+          .then(res => res.json() as Todo[])
+          .catch(this.handleError);
 
-  // removeCompleted():Promise<Todo[]>{
+      case 'completed':
+        return this.http.get(`${this.api_url}?completed=true`)
+          .toPromise()
+          .then(res => res.json() as Todo[])
+          .catch(this.handleError);
 
-  // }
+      default:
+        return this.getTodos();
+    }
+  }
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);
