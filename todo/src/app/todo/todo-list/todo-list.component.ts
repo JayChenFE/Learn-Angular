@@ -1,4 +1,4 @@
-import { Todo } from './../todo.model';
+import { Todo } from './../domain/entities';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({

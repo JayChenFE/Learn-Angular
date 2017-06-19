@@ -7,7 +7,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class TodoFooterComponent {
   //声明itemCount时一个可输入值(从引用者处)
-  @Input() itemCount: number=0;
+  @Input() itemCount: number = 0;
   @Output() onClear = new EventEmitter<boolean>();
 
   removeCompleted() {

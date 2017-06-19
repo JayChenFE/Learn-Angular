@@ -12,7 +12,7 @@
   (onToggleAll)="toggleAll()">
   </app-todo-list>
   <app-todo-footer
-  [itemCount]=1
+  [itemCount]=todos?.length
   (onClear)="removeCompleted()"></app-todo-footer>
 </section>
 

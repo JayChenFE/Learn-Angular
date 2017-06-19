@@ -1,14 +1,14 @@
+import { Todo } from './domain/entities';
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { TodoService } from './todo.service'
-import { Todo } from './todo.model'
-
 
 @Component({
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.css'],
   providers: [TodoService]
 })
+
 export class TodoComponent implements OnInit {
 
   todos: Todo[] = [];
