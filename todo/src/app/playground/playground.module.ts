@@ -1,3 +1,4 @@
+import { PlaygroundComponent } from './playground.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OneComponent } from './one/one.component';
@@ -10,6 +11,6 @@ import {PlaygroundRoutingModule} from './playground-routing.module';
     CommonModule,
     PlaygroundRoutingModule
   ],
-  declarations: [OneComponent, TwoComponent, ThreeComponent]
+  declarations: [PlaygroundComponent,OneComponent, TwoComponent, ThreeComponent]
 })
 export class PlaygroundModule { }

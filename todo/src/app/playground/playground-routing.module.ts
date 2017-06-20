@@ -11,7 +11,11 @@ const routes: Routes = [{
   component: PlaygroundComponent,
   children:[{
     path:'one',
-    component:OneComponent
+    component:OneComponent,
+    children:[{
+      path:'three',
+      component:ThreeComponent
+    }]
   },{
     path:'two',
     component:TwoComponent
