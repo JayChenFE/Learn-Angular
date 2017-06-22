@@ -1,0 +1,11 @@
+<footer class="footer" *ngIf="itemCount >= 0">
+  <span class="todo-count">
+      <strong>{{itemCount}} </strong>{{itemCount==1 ? 'item' : 'items'}} left
+    </span>
+  <ul class="filters">
+    <li><a routerLink="/todo/all" routerLinkActive="active">All</a></li>
+    <li><a routerLink="/todo/active" routerLinkActive="active">Active</a></li>
+    <li><a routerLink="/todo/completed" routerLinkActive="active">Completed</a></li>
+  </ul>
+  <button class="clear-completed" (click)="removeCompleted();$event.stopPropagation()">Clear Completed</button>
+</footer>

@@ -1,0 +1,25 @@
+<fieldset>
+  <legend>DecimalPiple</legend>
+  <p>pi (no formating) : {{pi}}</p>
+  <p>pi (.5-5) : {{pi|number:'.5-5'}}</p>
+  <p>pi (2.10-10) : {{pi|number:'2.10-10'}}</p>
+  <p>pi (.3-3) : {{pi|number:'.3-3'}}</p>
+</fieldset>
+<fieldset>
+  <legend>CurrencyPiple</legend>
+  <p>A in USD : {{a | currency:'USD':true}}</p>
+  <p>B in CNY : {{b | currency:'CNY':true:'4.2-2'}}</p>
+</fieldset>
+<fieldset>
+  <legend>PrecentPiple</legend>
+  <p>per : {{per | percent}}</p>
+  <p>per (3.2-2) : {{per | percent : '3.2-11'}}</p>
+</fieldset>
+<fieldset>
+  <legend>JsonPiple</legend>
+  <p>without jsonPiple</p>
+  <pre> {{obj}} </pre>
+  <br>
+  <p>with jsonPiple</p>
+  <pre> {{obj | json}} </pre>
+</fieldset>

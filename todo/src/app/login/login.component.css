@@ -1,0 +1,21 @@
+input.ng-invalid {
+  border: 3px solid red;
+}
+
+input.ng-valid {
+  border: 3px solid green
+}
+
+input::-webkit-input-placeholder {
+  color: red;
+  text-align: right;
+}
+
+input::-ms-input-placeholder {
+  color: red;
+  text-align: right;
+}
+
+.btn-login{
+  text-transform: none;
+}
