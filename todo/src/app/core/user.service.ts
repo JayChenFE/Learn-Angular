@@ -1,6 +1,8 @@
-import { Http } from '@angular/http';
+import { Http,Headers,Response } from '@angular/http';
+import {Observable} from 'rxjs/RX';
+import 'rxjs/add/operator/map';
 import { Injectable } from '@angular/core';
-import { User } from "app/todo/domain/entities";
+import { User } from "../todo/domain/entities";
 
 @Injectable()
 export class UserService {
@@ -8,20 +10,18 @@ export class UserService {
 
   constructor(private http: Http) { }
 
-  findUser(username: string): Promise<User> {
+  findUser(username: string): Observable<User> {
     const url = `${this.api_url}/?username=${username}`;
     return this.http.get(url)
-      .toPromise()
-      .then(res => {
+      .map(res => {
         let users = res.json() as User[];
         return users.length > 0 ? users[0] : null;
       })
-      .catch(this.handleError)
 
   }
 
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error);
-    return Promise.reject(error.message || error);
-  }
+  // private handleError(error: any): Promise<any> {
+  //   console.error('An error occurred', error);
+  //   return Promise.reject(error.message || error);
+  // }
 }

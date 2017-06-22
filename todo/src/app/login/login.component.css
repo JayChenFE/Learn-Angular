@@ -15,3 +15,7 @@ input::-ms-input-placeholder {
   color: red;
   text-align: right;
 }
+
+.btn-login{
+  text-transform: none;
+}

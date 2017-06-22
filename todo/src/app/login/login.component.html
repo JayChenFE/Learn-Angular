@@ -1,16 +1,14 @@
 <div>
-  <form #formRef="ngForm" (ngSubmit)="onSubmit(formRef.value)">
-    <fieldset ngModelGroup="login">
-      <input required name="username" [(ngModel)]="username" #usernameRef="ngModel" minlength="3" type="text" [placeholder]="holder"
-        (focus)="onfocus()">
-      <div *ngIf="usernameRef.errors?.required">必填</div>
-      <div *ngIf="usernameRef.errors?.minlength">至少3个字符</div>
-      <div *ngIf="auth?.hasError">
-        {{auth.errMsg}}
-      </div>
-      <input required name="password" [(ngModel)]="password" #passwordRef="ngModel" type="text">
-      <div *ngIf="passwordRef.errors?.required">必填</div>
-      <button type="submit">Login</button>
-    </fieldset>
+  <form (ngSubmit)="onSubmit()">
+    <mdl-textfield type="text" label="Username..." name="username" floating-label required [(ngModel)]="username" #usernameRef="ngModel">
+    </mdl-textfield>
+    <div *ngIf="auth?.hasError">
+      {{auth?.errMsg}}
+    </div>
+    <mdl-textfield type="password" label="Password..." name="password" floating-label required  [(ngModel)]="password" #passwordRef="ngModel">
+    </mdl-textfield>
+    <button class="btn-login" mdl-button mdl-button-type="raised" mdl-colored="primary" mdl-ripple type="submit">
+      Login
+    </button>
   </form>
 </div>
