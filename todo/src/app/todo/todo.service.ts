@@ -73,7 +73,6 @@ export class TodoService {
   filterTodos(filter: string): Promise<Todo[]> {
     const userId: number = +localStorage.getItem('userId');
     const url = `${this.api_url}?userId=${userId}`;
-
     switch (filter) {
       case 'active':
         return this.http.get(`${url}&completed=false`)
