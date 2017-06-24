@@ -4,5 +4,5 @@
     [placeholder]="placeholder"
     autofocus=""
     [(ngModel)]="inputValue"
-    (keyup.enter)="enterUp()">
+    (keyup.enter)="enterUp();$event.stopPropagation();">
   </header>

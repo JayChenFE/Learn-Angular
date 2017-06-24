@@ -10,7 +10,6 @@ import { Piple2Component } from './piple2/piple2.component';
 import { TrimPipe } from './customePiple/trim.pipe';
 import { BuildInPiplesComponent } from './build-in-piples/build-in-piples.component';
 import { DirectiveComponent } from './directive/directive.component';
-import { DateTransPipe } from './date-trans.pipe';
 import { DatePiplePipe } from './date-piple/date-piple.pipe';
 
 @NgModule({
@@ -18,6 +17,17 @@ import { DatePiplePipe } from './date-piple/date-piple.pipe';
     CommonModule,
     PlaygroundRoutingModule
   ],
-  declarations: [PlaygroundComponent, OneComponent, TwoComponent, ThreeComponent, Piple1Component, Piple2Component, TrimPipe, BuildInPiplesComponent, DirectiveComponent, DateTransPipe, DatePiplePipe]
+  declarations: [
+    PlaygroundComponent,
+    OneComponent,
+    TwoComponent,
+    ThreeComponent,
+    Piple1Component,
+    Piple2Component,
+    TrimPipe,
+    BuildInPiplesComponent,
+    DirectiveComponent,
+    DatePiplePipe
+  ]
 })
 export class PlaygroundModule { }

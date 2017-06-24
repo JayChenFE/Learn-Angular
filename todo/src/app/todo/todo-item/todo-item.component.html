@@ -2,5 +2,5 @@
   <!--<input type="checkbox" class="toggle" (click)="toggle()" [checked]="isChecked">-->
   <mdl-icon-toggle (click)="toggle()" [(ngModel)]="isChecked">check_circle</mdl-icon-toggle>
   <label [class.labelcompeleted]="isChecked" (click)="toggle()">{{todoDesc}}</label>
-  <button class="destroy" (click)="remove();$event.stopPropagation()"></button>
+  <button class="destroy" (click)="remove();$event.stopPropagation();$event.preventDefault();"></button>
 </div>

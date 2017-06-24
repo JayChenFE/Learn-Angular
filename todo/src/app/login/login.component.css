@@ -1,21 +1,12 @@
-input.ng-invalid {
-  border: 3px solid red;
+.login-container{
+  min-height: 100%;
+  max-height: 100%;
+  background-size: cover;                      /* <------ */
+  background-repeat: no-repeat;
+  background-position: center center;
 }
-
-input.ng-valid {
-  border: 3px solid green
-}
-
-input::-webkit-input-placeholder {
-  color: red;
-  text-align: right;
-}
-
-input::-ms-input-placeholder {
-  color: red;
-  text-align: right;
-}
-
-.btn-login{
-  text-transform: none;
+.login-form {
+  background-color: transparent;
+  display: table;
+  padding-top: 50px;
 }
