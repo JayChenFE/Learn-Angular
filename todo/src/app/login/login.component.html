@@ -38,10 +38,8 @@
     <button mdl-button mdl-colored="primary" (click)="changeBG();$event.stopPropagation();">
       变更背景图
     </button>
-    <button mdl-button mdl-colored="primary" (click)="onSubmit();$event.stopPropagation();$event.preventDefault();">
-     login
-    </button>
-    <!--<form class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--4-col-phone login-form">-->
+
+    <form class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--4-col-phone login-form">
       <mdl-textfield type="text" label="背景图关键字..." name="keyword" floating-label [(ngModel)]="keyword">
       </mdl-textfield>
       <mdl-textfield type="text" label="Username..." name="username" floating-label required [(ngModel)]="username" #usernameRef="ngModel">
@@ -54,17 +52,14 @@
       <mdl-textfield type="password" label="Password..." name="password" floating-label required [(ngModel)]="password" #passwordRef="ngModel">
       </mdl-textfield>
       <br/>
-      <!--<button mdl-button mdl-button-type="raised" mdl-colored="primary" mdl-ripple
-      type="submit"
-       [@loginState]="loginBtnState"
-        (mouseenter)="toggleLoginState(true)" (mouseleave)="toggleLoginState(false)"
-        (click)="onSubmit();$event.stopPropagation();$event.preventDefault();">
+      <button mdl-button mdl-button-type="raised" mdl-colored="primary" mdl-ripple type="submit" [@loginState]="loginBtnState"
+        (mouseenter)="toggleLoginState(true)" (mouseleave)="toggleLoginState(false)" (click)="onSubmit();$event.stopPropagation();$event.preventDefault();">
       Login
     </button>-->
-      <!--<button mdl-button mdl-colored="accent" (click)="register($event);$event.stopPropagation();$event.preventDefault();">
+      <button mdl-button mdl-colored="accent" (click)="register($event);$event.stopPropagation();$event.preventDefault();">
       Register
-    </button>-->
-    <!--</form>-->
+    </button>
+    </form>
   </div>
   <mdl-layout-spacer></mdl-layout-spacer>
 </div>

@@ -14,11 +14,11 @@ import { RegisterDialogComponent } from './register-dialog/register-dialog.compo
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   animations: [
-      trigger('loginState', [
+    trigger('loginState', [
       state('inactive', style({
         transform: 'scale(1)'
       })),
-      state('active',   style({
+      state('active', style({
         transform: 'scale(1.3)'
       })),
       transition('inactive => active', animate('100ms ease-in')),
@@ -53,7 +53,7 @@ export class LoginComponent implements OnDestroy {
     this.setBackground(this.keyword);
   }
   setBackground(keyword) {
-    this.subscription=this.bingService.getImageUrl(keyword)
+    this.subscription = this.bingService.getImageUrl(keyword)
       .subscribe((imgs: Image[]) => {
         this.sildes = [...imgs];
         this.rotateImgs(this.sildes)
@@ -66,6 +66,7 @@ export class LoginComponent implements OnDestroy {
       .subscribe(auth => {
         this.auth = Object.assign({}, auth);
         if (!auth.hasError) {
+          localStorage.setItem('auth', JSON.stringify(this.auth));
           this.router.navigate(['todo']);
         }
       })
@@ -74,7 +75,7 @@ export class LoginComponent implements OnDestroy {
   ngOnDestroy() {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
     clearInterval(this.interval);
   }
 
@@ -92,16 +93,16 @@ export class LoginComponent implements OnDestroy {
     this.loginBtnState = state ? 'active' : 'inactive';
   }
 
-  register($event: MouseEvent){
+  register($event: MouseEvent) {
     let pDialog = this.dialogService.showCustomDialog({
       component: RegisterDialogComponent,
       isModal: true,
-      styles: {'width': '350px'},
+      styles: { 'width': '350px' },
       clickOutsideToClose: true,
       enterTransitionDuration: 400,
       leaveTransitionDuration: 400
     });
-    pDialog.map( (dialogReference: MdlDialogReference) => {
+    pDialog.map((dialogReference: MdlDialogReference) => {
       console.log('dialog visible', dialogReference);
     });
 

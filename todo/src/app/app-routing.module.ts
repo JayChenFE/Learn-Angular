@@ -10,12 +10,8 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
     path: 'todo',
-    redirectTo: 'todo/ALL',
+    redirectTo: 'todo/all',
     canLoad:[AuthGuardService]
   },
   {
