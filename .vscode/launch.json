@@ -15,10 +15,10 @@
       "webRoot": "${workspaceRoot}/todo",
       "userDataDir": "D:\\code\\chromeDummy",
       "sourceMapPathOverrides": {
-        // "webpack:///./~/*": "${webRoot}/node_modules/*", // Example: "webpack:///./~/querystring/index.js" -> "/Users/me/project/node_modules/querystring/index.js"
-        "webpack:///./*": "${webRoot}/*" // Example: "webpack:///./src/app.js" -> "/users/me/project/src/app.js",
-        // "webpack:///*": "*", // Example: "webpack:///C:/project/app.ts" -> "C:/project/app.ts"
-        // "webpack:///src/*": "${webRoot}/*" // Example: "webpack:///src/App.js" -> "C:/project/src/App.js"
+        "webpack:///./~/*": "${webRoot}/node_modules/*", // Example: "webpack:///./~/querystring/index.js" -> "/Users/me/project/node_modules/querystring/index.js"
+        "webpack:///./*": "${webRoot}/*" ,// Example: "webpack:///./src/app.js" -> "/users/me/project/src/app.js",
+        "webpack:///*": "*", // Example: "webpack:///C:/project/app.ts" -> "C:/project/app.ts"
+        "webpack:///src/*": "${webRoot}/*" // Example: "webpack:///src/App.js" -> "C:/project/src/App.js"
       }
     },
     {

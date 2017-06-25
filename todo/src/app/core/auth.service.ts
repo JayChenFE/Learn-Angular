@@ -1,65 +1,77 @@
-import { Observable } from 'rxjs/RX';
-import { Auth } from './../todo/domain/entities';
-import { Http } from '@angular/http';
 import { Injectable, Inject } from '@angular/core';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { Http, Headers, Response } from '@angular/http';
+
+import { ReplaySubject, Observable } from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/switchMap';
+import { Auth } from '../todo/domain/entities';
 
 @Injectable()
 export class AuthService {
-  auth: Auth = {
-    hasError: true, redirectUrl: '', errMsg: 'not logged in'
-  };
-
+  auth: Auth = { hasError: true, redirectUrl: '', errMsg: 'not logged in' };
   subject: ReplaySubject<Auth> = new ReplaySubject<Auth>(1);
-
-
   constructor(private http: Http, @Inject('user') private userService) {
-    this.subject.next(this.auth)
+    this.subject.next(this.auth);
+    let authObj = localStorage.getItem('auth');
+    if (authObj !== null) {
+      this.auth = JSON.parse(authObj) as Auth;
+      this.subject.next(this.auth);
+    }
   }
   getAuth(): Observable<Auth> {
     return this.subject.asObservable();
   }
-  unAuth() {
-    this.auth = Object.assign({}, {
-      user: null,
-      hasError: true,
-      redirectUrl: '',
-      errMsg: 'not logged in'
-    });
-
+  unAuth(): void {
+    this.auth = Object.assign(
+      {},
+      this.auth,
+      { user: null, hasError: true, redirectUrl: '', errMsg: 'not logged in' });
+    localStorage.removeItem('auth');
     this.subject.next(this.auth);
   }
-
-  loginWithCredentials(username: string, password: string): Promise<Auth> {
+  register(username: string, password: string): Observable<Auth> {
+    let toAddUser = {
+      username: username,
+      password: password
+    };
+    return this.userService
+      .findUser(username)
+      .filter(user => user === null)
+      .switchMap(user => {
+        return this.userService.addUser(toAddUser).map(u => {
+          this.auth = Object.assign(
+            {},
+            { user: u, hasError: false, errMsg: null, redirectUrl: null }
+          );
+          this.subject.next(this.auth);
+          return this.auth;
+        });
+      });
+  }
+  loginWithCredentials(username: string, password: string): Observable<Auth> {
     return this.userService
       .findUser(username)
       .map(user => {
         let auth = new Auth();
-        // localStorage.removeItem('userId');
-        // let redirectUrl = localStorage.getItem('redirectUrl') === null ? '/' : localStorage.getItem('redirectUrl');
-        // auth.redirectUrl = redirectUrl;
+
         if (null === user) {
+          auth.user = null;
           auth.hasError = true;
-          auth.errMsg = '未找到该用户';
-        }
-        else if (password === user.password) {
-          auth.user = Object.assign({}, user);
+          auth.errMsg = 'user not found';
+        } else if (password === user.password) {
+          auth.user = user;
           auth.hasError = false;
-          localStorage.setItem('userId', user.id);
-        }
-        else {
+          auth.errMsg = null;
+        } else {
+          auth.user = null;
           auth.hasError = true;
-          auth.errMsg = '密码不匹配';
+          auth.errMsg = 'password not match';
         }
+
         this.auth = Object.assign({}, auth);
         this.subject.next(this.auth);
         return this.auth;
       });
   }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error);
-    return Promise.reject(error.message || error);
-  }
-
 }

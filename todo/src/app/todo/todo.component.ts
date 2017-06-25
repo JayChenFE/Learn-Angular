@@ -18,10 +18,10 @@ export class TodoComponent implements OnInit {
     @Inject('todoService')
     private service, private route: ActivatedRoute, private router: Router) {
 
+
   }
 
   ngOnInit() {
-    // this.getTodos();
     this.route.params.forEach((params: Params) => {
       let filter = params['filter'];
       this.filterTodos(filter);

@@ -17,7 +17,18 @@ import { DatePiplePipe } from './date-piple/date-piple.pipe';
     CommonModule,
     PlaygroundRoutingModule
   ],
-  declarations: [PlaygroundComponent, OneComponent, TwoComponent, ThreeComponent,
-  Piple1Component, Piple2Component, TrimPipe, BuildInPiplesComponent, DirectiveComponent,  DatePiplePipe]
+
+  declarations: [
+    PlaygroundComponent,
+    OneComponent,
+    TwoComponent,
+    ThreeComponent,
+    Piple1Component,
+    Piple2Component,
+    TrimPipe,
+    BuildInPiplesComponent,
+    DirectiveComponent,
+    DatePiplePipe
+  ]
 })
 export class PlaygroundModule { }

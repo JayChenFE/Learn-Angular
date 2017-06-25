@@ -1,5 +1,5 @@
 import { Todo } from './domain/entities';
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http, Headers } from "@angular/http";
 import { UUID } from 'angular2-uuid'
 import 'rxjs/add/operator/toPromise'
@@ -9,47 +9,40 @@ export class TodoService {
   // private api_url = 'api/todos';
   private api_url = 'http://localhost:3000/todos';
   private headers = new Headers({ 'Content-Type': 'application/json' });
+  private userId: string;
 
-  //userId: number = 0;
-
-  todos: Todo[] = [];
-
-  constructor(private http: Http) {
-
+  constructor(private http: Http, @Inject('auth') private authService) {
+    this.authService.getAuth()
+      .filter(auth => auth.user != null)
+      .subscribe(auth => this.userId = auth.user.id);
   }
-
-
-  //POST /todos
+  // POST /todos
   addTodo(desc: string): Promise<Todo> {
-    //"+"可以把string转化成number
-    const userId: number = +localStorage.getItem('userId');
-
     let todo = {
       id: UUID.UUID(),
       desc: desc,
       completed: false,
-      userId
+      userId: this.userId
     };
-
-    return this.http.post(this.api_url, JSON.stringify(todo), { headers: this.headers })
-      .toPromise().
-      then(res => res.json() as Todo)
-      .catch(this.handleError)
+    return this.http
+      .post(this.api_url, JSON.stringify(todo), { headers: this.headers })
+      .toPromise()
+      .then(res => res.json() as Todo)
+      .catch(this.handleError);
   }
-
-  //PUT /todos/id
+  // It was PUT /todos/:id before
+  // But we will use PATCH /todos/:id instead
+  // Because we don't want to waste the bytes those don't change
   toggleTodo(todo: Todo): Promise<Todo> {
     const url = `${this.api_url}/${todo.id}`;
     let updatedTodo = Object.assign({}, todo, { completed: !todo.completed });
-
     return this.http
       .patch(url, JSON.stringify({ completed: !todo.completed }), { headers: this.headers })
       .toPromise()
       .then(() => updatedTodo)
       .catch(this.handleError);
   }
-
-  //DELETE /todos/id
+  // DELETE /todos/:id
   deleteTodoById(id: string): Promise<void> {
     const url = `${this.api_url}/${id}`;
     return this.http
@@ -57,13 +50,10 @@ export class TodoService {
       .toPromise()
       .then(() => null)
       .catch(this.handleError);
-
   }
-  //GET /todos
+  // GET /todos
   getTodos(): Promise<Todo[]> {
-    const userId: number = +localStorage.getItem('userId');
-    return this.http
-      .get(`${this.api_url}?userId=${userId}`)
+    return this.http.get(`${this.api_url}?userId=${this.userId}`)
       .toPromise()
       .then(res => res.json() as Todo[])
       .catch(this.handleError);
@@ -71,8 +61,7 @@ export class TodoService {
 
   //GET /todos?completed=true/false
   filterTodos(filter: string): Promise<Todo[]> {
-    const userId: number = +localStorage.getItem('userId');
-    const url = `${this.api_url}?userId=${userId}`;
+    const url = `${this.api_url}?userId=${this.userId}`;
 
     switch (filter) {
       case 'active':
