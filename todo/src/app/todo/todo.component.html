@@ -3,16 +3,16 @@
   placeholder="请输入内容"
   delay="400"
   (textChanges)="onTextChanges($event)"
-  (onEnterUp)="addTodo()">
+  (onEnterUp)="addTodo($event)">
   </app-todo-header>
   <app-todo-list
-  [todos]="todos"
+  [todos]="todos | async"
   (onRemoveTodo)="removeTodo($event)"
   (onToggleTodo)="toggleTodo($event)"
   (onToggleAll)="toggleAll()">
   </app-todo-list>
   <app-todo-footer
-  [itemCount]=todos?.length
+  [itemCount]="(todos | async).length "
   (onClear)="removeCompleted()"></app-todo-footer>
 </section>
 

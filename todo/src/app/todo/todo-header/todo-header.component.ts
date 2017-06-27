@@ -18,7 +18,7 @@ export class TodoHeaderComponent implements OnInit {
   @Input() delay: number = 500;
 
   @Output() textChanges = new EventEmitter<string>();
-  @Output() onEnterUp = new EventEmitter<boolean>();
+  @Output() onEnterUp = new EventEmitter<string>();
 
   constructor(private elementRef: ElementRef) {
     const event$ = Observable.fromEvent(elementRef.nativeElement, 'keyup')
@@ -32,7 +32,10 @@ export class TodoHeaderComponent implements OnInit {
   }
 
   enterUp() {
-    this.onEnterUp.emit(true);
+    if (this.inputValue.trim().length === 0) {
+      return;
+    }
+    this.onEnterUp.emit(this.inputValue);
     this.inputValue = '';
   }
 

@@ -8,10 +8,12 @@ import { TodoModule } from './todo/todo.module';
 import { LoginModule } from './login/login.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
+import { RxComponent } from './rx/rx.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RxComponent
   ],
   imports: [
     BrowserModule,

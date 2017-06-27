@@ -75,7 +75,7 @@ export class LoginComponent implements OnDestroy {
   ngOnDestroy() {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
-    // this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
     clearInterval(this.interval);
   }
 
